@@ -15,7 +15,7 @@
         <q-dialog v-model="showDialog" >
           <q-card>
             <q-card style="background-color: #272727;">
-            <q-card-section >
+            <q-card-section>
 
               <q-tabs
                 v-model="tab"
@@ -28,13 +28,81 @@
                 <q-tab name="signin" label="註冊" />
               </q-tabs>
             </q-card-section>
-            <q-card-section>
-              <div class="text-subtitle2 text-white">這是一個卡片內容</div>
+            <q-card-section style="width: 800px;">
+              <div class="q-pa-md" style="width: 525px">
+                <q-form
+                  v-if="tab === 'login'"
+                  @submit="onSubmit"
+                  @reset="onReset"
+                  class="q-gutter-md tw"
+                >
+                  <q-input
+                    filled
+                    v-model="account"
+                    label="你的帳號 *"
+                    lazy-rules
+                    dark
+                    :rules="[ val => val && val.length > 0 || '請輸入帳號']"
+                  />
+                  <q-input
+                    filled
+                    v-model="password"
+                    label="你的密碼 *"
+                    lazy-rules
+                    dark
+                    :rules="[ val => val && val.length > 0 || '請輸入密碼']"
+                  />
+                  <div>
+                    <q-btn label="登入" type="submit" color="black"/>
+                    <q-btn label="重置" type="reset" color="white" flat class="q-ml-sm" />
+                  </div>
+                </q-form>
+                <q-form
+                  v-if="tab === 'signin'"
+                  @submit="onSubmit"
+                  @reset="onReset"
+                  class="q-gutter-md tw"
+                >
+                    <q-input
+                      filled
+                      v-model="account"
+                      label="你的帳號 *"
+                      lazy-rules
+                      dark
+                      :rules="[ val => val && val.length > 0 || '請輸入帳號']"
+                      class="text-white"
+                    />
+                    <q-input
+                      filled
+                      v-model="email"
+                      label="你的信箱 *"
+                      lazy-rules
+                      dark
+                      :rules="[ val => val && val.length > 0 || '請輸入密碼']"
+                    />
+                    <q-input
+                      filled
+                      v-model="password"
+                      label="你的密碼 *"
+                      lazy-rules
+                      dark
+                      :rules="[ val => val && val.length > 0 || '請輸入帳號']"
+                    />
+                    <q-input
+                      filled
+                      v-model="password"
+                      label="再次輸入密碼 *"
+                      lazy-rules
+                      dark
+                      :rules="[ val => val && val.length > 0 || '請輸入密碼']"
+                    />
+                    <div>
+                      <q-btn label="註冊" type="submit" color="black"/>
+                      <q-btn label="重置" type="reset" color="white" flat class="q-ml-sm" />
+                    </div>
+                </q-form>
+              </div>
             </q-card-section>
-            <q-card-actions>
-              <q-btn flat color="white" label="確定" v-close-popup />
-              <q-btn flat color="white" label="取消" v-close-popup />
-            </q-card-actions>
           </q-card>
 
           </q-card>
@@ -51,6 +119,7 @@
 <script>
 import { defineComponent, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useQuasar } from 'quasar'
 
 export default defineComponent({
   name: 'MainLayout',
@@ -58,6 +127,11 @@ export default defineComponent({
   setup () {
     const showDialog = ref(false)
     const router = useRouter()
+    const $q = useQuasar()
+
+    const name = ref(null)
+    const age = ref(null)
+    const accept = ref(false)
 
     const goToTeach = () => {
       router.push('/teach')
@@ -78,9 +152,35 @@ export default defineComponent({
       goToIndex,
       goToChat,
       goToAbout,
-      tab: ref('mails'),
+      tab: ref('login'),
+      name,
+      age,
+      accept,
       toggleLeftDrawer () {
         showDialog.value = !showDialog.value
+      },
+      onSubmit () {
+        if (accept.value !== true) {
+          $q.notify({
+            color: 'red-5',
+            textColor: 'white',
+            icon: 'warning',
+            message: 'You need to accept the license and terms first'
+          })
+        } else {
+          $q.notify({
+            color: 'green-4',
+            textColor: 'white',
+            icon: 'cloud_done',
+            message: 'Submitted'
+          })
+        }
+      },
+
+      onReset () {
+        name.value = null
+        age.value = null
+        accept.value = false
       }
     }
   }
