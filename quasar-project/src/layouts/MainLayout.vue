@@ -78,23 +78,23 @@
                       label="你的信箱 *"
                       lazy-rules
                       dark
-                      :rules="[ val => val && val.length > 0 || '請輸入密碼']"
+                      :rules="[ val => val && val.length > 0 || '請輸入信箱']"
                     />
                     <q-input
                       filled
-                      v-model="password"
+                      v-model="passworda"
                       label="你的密碼 *"
                       lazy-rules
                       dark
-                      :rules="[ val => val && val.length > 0 || '請輸入帳號']"
+                      :rules="[ val => val && val.length > 0 || '請輸入密碼']"
                     />
                     <q-input
                       filled
-                      v-model="password"
+                      v-model="passwordb"
                       label="再次輸入密碼 *"
                       lazy-rules
                       dark
-                      :rules="[ val => val && val.length > 0 || '請輸入密碼']"
+                      :rules="[ val => val && val.length > 0 || '請再次輸入密碼']"
                     />
                     <div>
                       <q-btn label="註冊" type="submit" color="black"/>
@@ -129,9 +129,10 @@ export default defineComponent({
     const router = useRouter()
     const $q = useQuasar()
 
-    const name = ref(null)
-    const age = ref(null)
-    const accept = ref(false)
+    const account = ref(null)
+    const passworda = ref(null)
+    const email = ref(null)
+    const passwordb = ref(null)
 
     const goToTeach = () => {
       router.push('/teach')
@@ -153,9 +154,10 @@ export default defineComponent({
       goToChat,
       goToAbout,
       tab: ref('login'),
-      name,
-      age,
-      accept,
+      account,
+      passworda,
+      passwordb,
+      email,
       toggleLeftDrawer () {
         showDialog.value = !showDialog.value
       },
@@ -178,9 +180,10 @@ export default defineComponent({
       },
 
       onReset () {
-        name.value = null
-        age.value = null
-        accept.value = false
+        account.value = null
+        passworda.value = null
+        passwordb.value = null
+        email.value = null
       }
     }
   }
