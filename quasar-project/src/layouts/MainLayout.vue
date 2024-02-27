@@ -32,7 +32,7 @@
               <div class="q-pa-md" style="width: 525px">
                 <q-form
                   v-if="tab === 'login'"
-                  @submit="onSubmit"
+                  @submit="onSubmitLogin"
                   @reset="onReset"
                   class="q-gutter-md tw"
                 >
@@ -59,7 +59,7 @@
                 </q-form>
                 <q-form
                   v-if="tab === 'signin'"
-                  @submit="onSubmit"
+                  @submit="onSubmitRegister"
                   @reset="onReset"
                   class="q-gutter-md tw"
                 >
@@ -82,7 +82,7 @@
                     />
                     <q-input
                       filled
-                      v-model="passworda"
+                      v-model="password"
                       label="你的密碼 *"
                       lazy-rules
                       dark
@@ -90,7 +90,7 @@
                     />
                     <q-input
                       filled
-                      v-model="passwordb"
+                      v-model="passwordConfirm"
                       label="再次輸入密碼 *"
                       lazy-rules
                       dark
@@ -116,80 +116,103 @@
   </q-layout>
 </template>
 
-<script>
-import { defineComponent, ref } from 'vue'
+<script setup>
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
+import axios from 'axios'
 
-export default defineComponent({
-  name: 'MainLayout',
+const showDialog = ref(false)
+const router = useRouter()
+const $q = useQuasar()
 
-  setup () {
-    const showDialog = ref(false)
-    const router = useRouter()
-    const $q = useQuasar()
+const account = ref(null)
+const password = ref(null)
+const email = ref(null)
+const passwordConfirm = ref(null)
 
-    const account = ref(null)
-    const passworda = ref(null)
-    const email = ref(null)
-    const passwordb = ref(null)
+const goToTeach = () => {
+  router.push('/teach')
+}
+const goToIndex = () => {
+  router.push('/')
+}
+const goToChat = () => {
+  router.push('/chat')
+}
+const goToAbout = () => {
+  router.push('/about')
+}
+const accept = ref(false)
+const tab = ref('login')
 
-    const goToTeach = () => {
-      router.push('/teach')
-    }
-    const goToIndex = () => {
-      router.push('/')
-    }
-    const goToChat = () => {
-      router.push('/chat')
-    }
-    const goToAbout = () => {
-      router.push('/about')
-    }
+const onSubmitLogin = () => {
+  if (accept.value !== true) {
+    $q.notify({
+      color: 'red-5',
+      textColor: 'white',
+      icon: 'warning',
+      message: 'You need to accept the license and terms first'
+    })
+  } else {
+    axios.post('http://your-backend-server.com/login', {
+      account: account.value,
+      password: password.value
+    })
+      .then(response => {
+        console.log(response)
+      })
+      .catch(error => {
+        console.error(error)
+      })
 
-    return {
-      showDialog,
-      goToTeach,
-      goToIndex,
-      goToChat,
-      goToAbout,
-      tab: ref('login'),
-      account,
-      passworda,
-      passwordb,
-      email,
-      toggleLeftDrawer () {
-        showDialog.value = !showDialog.value
-      },
-      onSubmit () {
-        if (accept.value !== true) {
-          $q.notify({
-            color: 'red-5',
-            textColor: 'white',
-            icon: 'warning',
-            message: 'You need to accept the license and terms first'
-          })
-        } else {
-          $q.notify({
-            color: 'green-4',
-            textColor: 'white',
-            icon: 'cloud_done',
-            message: 'Submitted'
-          })
-        }
-      },
-
-      onReset () {
-        account.value = null
-        passworda.value = null
-        passwordb.value = null
-        email.value = null
-      }
-    }
+    $q.notify({
+      color: 'green-4',
+      textColor: 'white',
+      icon: 'cloud_done',
+      message: 'Submitted'
+    })
   }
-})
-</script>
+}
 
+const onSubmitRegister = () => {
+  if (accept.value !== true) {
+    $q.notify({
+      color: 'red-5',
+      textColor: 'white',
+      icon: 'warning',
+      message: 'You need to accept the license and terms first'
+    })
+  } else {
+    axios.post('http://your-backend-server.com/register', {
+      account: account.value,
+      email: email.value,
+      password: password.value,
+      passwordConfirm: passwordConfirm.value
+    })
+      .then(response => {
+        console.log(response)
+      })
+      .catch(error => {
+        console.error(error)
+      })
+
+    $q.notify({
+      color: 'green-4',
+      textColor: 'white',
+      icon: 'cloud_done',
+      message: 'Submitted'
+    })
+  }
+}
+
+const onReset = () => {
+  account.value = null
+  password.value = null
+  passwordConfirm.value = null
+  email.value = null
+}
+</script>
 <style>
 ::-webkit-scrollbar {
   display: none;
