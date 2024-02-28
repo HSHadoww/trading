@@ -121,6 +121,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
 import axios from 'axios'
+import { api } from 'boot/axios'
 
 const showDialog = ref(false)
 const router = useRouter()
@@ -175,7 +176,7 @@ const onSubmitLogin = () => {
   }
 }
 
-const onSubmitRegister = () => {
+const onSubmitRegister = async () => {
   if (accept.value !== true) {
     $q.notify({
       color: 'red-5',
@@ -184,25 +185,28 @@ const onSubmitRegister = () => {
       message: 'You need to accept the license and terms first'
     })
   } else {
-    axios.post('http://your-backend-server.com/register', {
-      account: account.value,
-      email: email.value,
-      password: password.value,
-      passwordConfirm: passwordConfirm.value
-    })
-      .then(response => {
-        console.log(response)
+    try {
+      await api.post('/users', {
+        account: account.value,
+        email: email.value,
+        password: password.value
       })
-      .catch(error => {
-        console.error(error)
+      $q.notify({
+        color: 'green-4',
+        textColor: 'white',
+        icon: 'cloud_done',
+        message: '註冊成功'
       })
-
-    $q.notify({
-      color: 'green-4',
-      textColor: 'white',
-      icon: 'cloud_done',
-      message: 'Submitted'
-    })
+      router.push('/login')
+    } catch (error) {
+      const text = error?.response?.data?.message || '發生錯誤，請稍後再試'
+      $q.notify({
+        color: 'green-4',
+        textColor: 'white',
+        icon: 'cloud_done',
+        message: text
+      })
+    }
   }
 }
 

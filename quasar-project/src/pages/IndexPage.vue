@@ -9,10 +9,10 @@
         infinite
         style="height: calc(100vh - 50px);"
       >
-        <q-carousel-slide :name="1" img-src="https://cdn.quasar.dev/img/mountains.jpg" />
-        <q-carousel-slide :name="2" img-src="https://cdn.quasar.dev/img/parallax1.jpg" />
-        <q-carousel-slide :name="3" img-src="https://cdn.quasar.dev/img/parallax2.jpg" />
-        <q-carousel-slide :name="4" img-src="https://cdn.quasar.dev/img/quasar.jpg" />
+        <q-carousel-slide :name="1" img-src="../assets/c1.jpg" />
+        <q-carousel-slide :name="2" img-src="../assets/c2.jpg" />
+        <q-carousel-slide :name="3" img-src="../assets/c3.jpg" />
+        <q-carousel-slide :name="4" img-src="../assets/c4.jpg" />
         <template v-slot:control>
           <q-carousel-control
             position="top-right"
@@ -45,14 +45,14 @@
           <q-img
             class="rounded-start"
             style="height: 100%;"
-            src="https://picsum.photos/1920/1080/?random=10"
+            src="../assets/b1.jpg"
           />
         </div>
         <div class="col-lg-6 m-auto text-center flex flex-center" style="padding: 0;">
           <q-card-section>
             <div class="text-h3" style="line-height: 2;">免費教學</div>
             <div class="text-body1" style="line-height: 2; max-width: 600px;">
-              是以兩個不願意走出為你他對機關表達有限責任之下女朋友，盯着計算，你怎不來他還培養眼中加入附件從來沒像素較大最高節目治理和我，情形情況一步是怎麼策劃不要收藏網際網路藍色，趨勢她是電信監督維護屏東外掛為。
+              各種基礎的技術分析，包括傳統技術分析(PA)、訂單流、指標流、SMC等等，都可以在這裡找到，不會有任何費用，只要你願意學習，我們就願意教你。
             </div>
           </q-card-section>
         </div>
@@ -64,7 +64,7 @@
           <q-card-section>
             <div class="text-h3" style="line-height: 2;">問題交流</div>
             <div class="text-body1" style="line-height: 2; max-width: 600px;">
-              是以兩個不願意走出為你他對機關表達有限責任之下女朋友，盯着計算，你怎不來他還培養眼中加入附件從來沒像素較大最高節目治理和我，情形情況一步是怎麼策劃不要收藏網際網路藍色，趨勢她是電信監督維護屏東外掛為。
+              分析上遇到甚麼問題，都可以附圖提出提問，我們及廣大的會員們都會盡力的解答你的問題，讓你的學習之路更加順暢。有新的想法也可以在這裡分享。心態上遇到問題，我們也會盡力得幫助你。
             </div>
           </q-card-section>
         </div>
@@ -72,7 +72,7 @@
           <q-img
             class="rounded-start"
             style="height: 100%;"
-            src="https://picsum.photos/1920/1080/?random=10"
+            src="../assets/b2.jpg"
           />
         </div>
       </div>
